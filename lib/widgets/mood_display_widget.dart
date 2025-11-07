@@ -34,6 +34,7 @@ class MoodDisplayWidget extends StatelessWidget {
 
   Widget _buildDetectingState(ThemeData theme, ColorScheme colors) {
     return _BaseCard(
+      verticalPadding: 18,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -43,6 +44,17 @@ class MoodDisplayWidget extends StatelessWidget {
             'Detecting your mood…',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: colors.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Analyzing your expression',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.onSurfaceVariant.withValues(alpha: 0.7),
+              fontSize: 12,
             ),
             textAlign: TextAlign.center,
           ),
@@ -53,19 +65,38 @@ class MoodDisplayWidget extends StatelessWidget {
 
   Widget _buildEmptyState(ThemeData theme, ColorScheme colors) {
     return _BaseCard(
+      verticalPadding: 16,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.camera_alt_rounded,
-            size: 52,
-            color: colors.onSurfaceVariant.withValues(alpha: 0.4),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colors.primaryContainer.withValues(alpha: 0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.camera_alt_rounded,
+              size: 38,
+              color: colors.primary,
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
           Text(
-            'Take a quick snap to reveal your mood',
-            style: theme.textTheme.bodyMedium?.copyWith(
+            'Ready to detect your mood',
+            style: theme.textTheme.bodyLarge?.copyWith(
               color: colors.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Take a quick snap to reveal your emotion',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.onSurfaceVariant.withValues(alpha: 0.7),
+              fontSize: 12,
             ),
             textAlign: TextAlign.center,
           ),
@@ -89,10 +120,15 @@ class MoodDisplayWidget extends StatelessWidget {
             constraints.hasBoundedHeight && constraints.maxHeight < 220;
         final compactWidth = constraints.maxWidth < 280;
         final compact = compactHeight || compactWidth;
-        final horizontalPadding = compact ? 16.0 : 20.0;
-        final verticalPadding = compact ? 14.0 : 22.0;
-        final circleSize = compact ? 54.0 : 66.0;
-        final emojiSize = compact ? 26.0 : 32.0;
+
+        // Extra compact mode for very small spaces
+        final veryCompact =
+            constraints.hasBoundedHeight && constraints.maxHeight < 200;
+
+        final horizontalPadding = veryCompact ? 10.0 : (compact ? 14.0 : 20.0);
+        final verticalPadding = veryCompact ? 6.0 : (compact ? 10.0 : 22.0);
+        final circleSize = veryCompact ? 38.0 : (compact ? 48.0 : 66.0);
+        final emojiSize = veryCompact ? 18.0 : (compact ? 24.0 : 32.0);
         final buttonLabel = compact ? 'Play music' : 'Play matching music';
 
         return _BaseCard(
@@ -118,34 +154,55 @@ class MoodDisplayWidget extends StatelessWidget {
                   style: TextStyle(fontSize: emojiSize),
                 ),
               ),
-              SizedBox(height: compact ? 10 : 14),
+              SizedBox(height: veryCompact ? 4 : (compact ? 8 : 14)),
               Text(
                 emotion.displayName,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
                   color: accent,
+                  fontSize: veryCompact ? 14 : (compact ? 16 : 22),
+                  letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(height: 6),
-              _buildConfidenceIndicator(confidence, theme, colors),
-              SizedBox(height: compact ? 10 : 16),
+              SizedBox(height: veryCompact ? 3 : 5),
+              _buildConfidenceIndicator(confidence, theme, colors, veryCompact),
+              SizedBox(height: veryCompact ? 4 : (compact ? 8 : 16)),
               Text(
                 _getEmotionDescription(emotion),
-                style: theme.textTheme.bodySmall?.copyWith(
+                style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.onSurfaceVariant,
+                  fontSize: veryCompact ? 11 : (compact ? 12 : 14),
+                  fontWeight: FontWeight.w500,
+                  height: 1.4,
                 ),
                 textAlign: TextAlign.center,
-                maxLines: compact ? 2 : 3,
+                maxLines: veryCompact ? 2 : (compact ? 2 : 3),
                 overflow: TextOverflow.ellipsis,
               ),
               if (onPlayMusic != null) ...[
-                SizedBox(height: compact ? 10 : 18),
+                SizedBox(height: veryCompact ? 4 : (compact ? 8 : 18)),
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton.icon(
                     onPressed: onPlayMusic,
-                    icon: const Icon(Icons.play_arrow_rounded, size: 18),
-                    label: Text(buttonLabel),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: accent,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        vertical: veryCompact ? 8 : (compact ? 10 : 12),
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.play_circle_filled,
+                      size: veryCompact ? 16 : 20,
+                    ),
+                    label: Text(
+                      buttonLabel,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: veryCompact ? 11 : (compact ? 13 : 14),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -159,26 +216,41 @@ class MoodDisplayWidget extends StatelessWidget {
   Widget _buildConfidenceIndicator(
     double confidence,
     ThemeData theme,
-    ColorScheme colors,
-  ) {
+    ColorScheme colors, [
+    bool veryCompact = false,
+  ]) {
     final percentage = (confidence * 100).round();
 
     return Column(
       children: [
-        Text(
-          'Confidence: $percentage%',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: colors.onSurfaceVariant,
-          ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.psychology_rounded,
+              size: veryCompact ? 12 : 14,
+              color: colors.onSurfaceVariant.withValues(alpha: 0.7),
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '$percentage% confident',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: colors.onSurfaceVariant,
+                fontSize: veryCompact ? 10 : 12,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.3,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: veryCompact ? 4 : 6),
         SizedBox(
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(999),
             child: LinearProgressIndicator(
               value: confidence.clamp(0.0, 1.0),
-              minHeight: 6,
+              minHeight: veryCompact ? 5 : 7,
               backgroundColor: colors.outlineVariant.withValues(alpha: 0.3),
               valueColor: AlwaysStoppedAnimation<Color>(
                 _getConfidenceColor(confidence),

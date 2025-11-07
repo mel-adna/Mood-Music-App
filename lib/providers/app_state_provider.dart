@@ -90,7 +90,7 @@ class AppStateProvider extends ChangeNotifier {
 
       _currentEmotion = emotion;
       _isDetecting = false;
-      _setStatus('Detected: ${emotion.emotion.displayName}');
+      _setStatus('');
 
       // Add to history
       _addToHistory(emotion);

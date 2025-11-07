@@ -52,31 +52,60 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           appBar: AppBar(
             titleSpacing: 0,
             backgroundColor: colorScheme.surface,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+            title: Row(
               children: [
-                Text(
-                  'Mood Music',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: colorScheme.onSurface,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [colorScheme.primary, colorScheme.tertiary],
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.music_note_rounded,
+                    color: Colors.white,
+                    size: 20,
                   ),
                 ),
-                Text(
-                  'Let your mood pick the playlist',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                const SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Mood Music',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: colorScheme.onSurface,
+                        letterSpacing: 0.3,
+                      ),
+                    ),
+                    Text(
+                      'Let your mood pick the playlist',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.refresh),
+                icon: const Icon(Icons.refresh_rounded),
                 color: colorScheme.primary,
                 tooltip: 'Refresh camera',
-                onPressed: () => appState.initializeCamera(),
+                onPressed: () {
+                  appState.clearCurrentEmotion();
+                  appState.initializeCamera();
+                },
+                style: IconButton.styleFrom(
+                  backgroundColor: colorScheme.primaryContainer.withValues(
+                    alpha: 0.5,
+                  ),
+                ),
               ),
               const SizedBox(width: 8),
             ],

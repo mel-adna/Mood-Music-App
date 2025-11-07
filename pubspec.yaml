@@ -1,0 +1,84 @@
+name: mood_music_app
+description: "A Flutter app that detects your mood through facial emotion recognition and recommends matching music playlists from Spotify."
+
+# Prevent accidental publishing
+publish_to: 'none'
+
+# App version and build number
+version: 1.0.0+1
+
+# Dart SDK constraints
+environment:
+  sdk: ^3.9.2
+
+# Main dependencies
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI Dependencies
+  cupertino_icons: ^1.0.8
+
+  # Camera functionality
+  camera: ^0.10.6
+
+  # Face detection with Google ML Kit
+  google_mlkit_face_detection: ^0.10.1
+
+  # TensorFlow Lite for emotion classification
+  tflite_flutter: ^0.10.4
+
+  # HTTP requests for Spotify API
+  http: ^1.1.2
+
+  # Local storage
+  shared_preferences: ^2.2.2
+
+  # State management
+  provider: ^6.1.1
+
+  # Permissions
+  permission_handler: ^11.1.0
+
+  # Path utilities
+  path_provider: ^2.1.2
+  path: ^1.9.0
+
+  # Image processing
+  image: ^4.1.7
+
+  # URL launcher for Spotify links
+  url_launcher: ^6.2.2
+
+  # Loading indicators
+  flutter_spinkit: ^5.2.0
+
+# Development dependencies
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Linting
+  flutter_lints: ^5.0.0
+
+  # JSON code generation
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.7
+
+  # Testing utilities
+  mockito: ^5.4.4
+
+# Flutter configuration
+flutter:
+  uses-material-design: true
+
+  # Assets configuration for TFLite model
+  assets:
+    - assets/tflite/
+    - assets/models/
+
+  # Font configuration (using system fonts for now)
+  # fonts:
+  #   - family: Roboto
+  #     fonts:
+  #       - asset: assets/fonts/Roboto-Regular.ttf

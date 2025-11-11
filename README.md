@@ -18,8 +18,10 @@ A Flutter application that detects your mood through facial emotion recognition 
 
 > **Note**: Add your app screenshots here to showcase the user interface
 
-```
-Screenshots coming soon!
+``![WhatsApp Image 2025-11-11 at 22 37 03_470b5b6f](https://github.com/user-attachments/assets/cd93a381-3e9d-4415-8bd3-dd26713433fb)
+![WhatsApp Image 2025-11-11 at 22 37 02_7bb8fb85](https://github.com/user-attachments/assets/a2692150-338a-4f74-a26d-34e8ba294e5e)
+`
+
 ```
 
 ## 🔬 How It Works

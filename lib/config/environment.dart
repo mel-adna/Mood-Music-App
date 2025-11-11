@@ -1,10 +1,16 @@
 /// Environment configuration for API keys and settings
+///
+/// IMPORTANT: Never commit actual API keys to version control!
+/// This file contains placeholder values. Users should:
+/// 1. Get their own credentials from https://developer.spotify.com/dashboard
+/// 2. Replace the placeholder values below with their actual credentials
+/// 3. Ensure this file is in .gitignore if using real credentials
 class Environment {
   // Spotify API Configuration
-  // Configured with your Spotify App credentials
   // Get these from: https://developer.spotify.com/dashboard
-  static const String spotifyClientId = '2fce32d68b334388a19632cd3e3c281d';
-  static const String spotifyClientSecret = 'de57d32b514c4984a790bad8a798ce79';
+  // REPLACE THESE WITH YOUR OWN CREDENTIALS - DO NOT COMMIT REAL VALUES
+  static const String spotifyClientId = 'YOUR_SPOTIFY_CLIENT_ID_HERE';
+  static const String spotifyClientSecret = 'YOUR_SPOTIFY_CLIENT_SECRET_HERE';
   static const String spotifyRedirectUri = 'moodmusic://callback';
 
   // API Endpoints

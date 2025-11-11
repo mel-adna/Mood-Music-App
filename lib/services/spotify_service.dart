@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import '../models/emotion_model.dart';
 import '../config/environment.dart';
+import '../utils/logger.dart';
 
 /// Service for integrating with Spotify Web API
 class SpotifyService {
@@ -28,13 +28,16 @@ class SpotifyService {
   Future<void> initialize() async {
     try {
       await _getAccessToken();
-      if (kDebugMode) {
-        print('SpotifyService initialized successfully');
-      }
+      AppLogger.success(
+        'SpotifyService initialized successfully',
+        tag: 'Spotify',
+      );
     } catch (e) {
-      if (kDebugMode) {
-        print('Failed to initialize SpotifyService: $e');
-      }
+      AppLogger.error(
+        'Failed to initialize SpotifyService',
+        error: e,
+        tag: 'Spotify',
+      );
       // Continue without throwing - app can work without Spotify integration
     }
   }
@@ -95,15 +98,15 @@ class SpotifyService {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
         return true;
       } else {
-        if (kDebugMode) {
-          print('Could not launch Spotify URL: $url');
-        }
+        AppLogger.warning('Could not launch Spotify URL: $url', tag: 'Spotify');
         return false;
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error launching Spotify playlist: $e');
-      }
+      AppLogger.error(
+        'Error launching Spotify playlist',
+        error: e,
+        tag: 'Spotify',
+      );
       return false;
     }
   }
@@ -146,9 +149,7 @@ class SpotifyService {
         return _getMockPlaylistInfo(emotion);
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error getting playlist info: $e');
-      }
+      AppLogger.error('Error getting playlist info', error: e, tag: 'Spotify');
       return _getMockPlaylistInfo(emotion);
     }
   }
@@ -255,9 +256,7 @@ class SpotifyService {
             .toList();
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error searching playlists: $e');
-      }
+      AppLogger.error('Error searching playlists', error: e, tag: 'Spotify');
     }
     return [];
   }
@@ -281,9 +280,7 @@ class SpotifyService {
 
       return false;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error opening Spotify: $e');
-      }
+      AppLogger.error('Error opening Spotify', error: e, tag: 'Spotify');
       return false;
     }
   }

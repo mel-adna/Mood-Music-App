@@ -151,12 +151,14 @@ class _CameraSection extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceVariant,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: colorScheme.outlineVariant.withOpacity(0.5)),
+        border: Border.all(
+          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+        ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.04),
+            color: colorScheme.shadow.withValues(alpha: 0.04),
             blurRadius: 24,
             offset: const Offset(0, 12),
           ),
@@ -185,8 +187,8 @@ class _CameraView extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              accentColor.withOpacity(0.12),
-              accentColor.withOpacity(0.2),
+              accentColor.withValues(alpha: 0.12),
+              accentColor.withValues(alpha: 0.2),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -234,7 +236,7 @@ class _CameraView extends StatelessWidget {
         if (appState.isDetecting)
           Positioned.fill(
             child: Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -261,7 +263,7 @@ class _CameraView extends StatelessWidget {
           Positioned.fill(
             child: CustomPaint(
               painter: FaceGuidePainter(
-                accentColor: accentColor.withOpacity(0.75),
+                accentColor: accentColor.withValues(alpha: 0.75),
               ),
             ),
           ),
@@ -327,10 +329,10 @@ class _MoodSection extends StatelessWidget {
       child: Container(
         key: key,
         decoration: BoxDecoration(
-          color: colorScheme.surfaceVariant,
+          color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: colorScheme.outlineVariant.withOpacity(0.4),
+            color: colorScheme.outlineVariant.withValues(alpha: 0.4),
           ),
         ),
         padding: const EdgeInsets.all(16),
@@ -367,7 +369,7 @@ class _StatusBanner extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withOpacity(0.6),
+                color: colorScheme.primaryContainer.withValues(alpha: 0.6),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(

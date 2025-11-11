@@ -12,6 +12,14 @@
 .swiftpm/
 migrate_working_dir/
 
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+lib/config/environment.dart.bak
+**/secrets.dart
+**/*_secrets.dart
+
 # IntelliJ related
 *.iml
 *.ipr
